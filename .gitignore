@@ -1,0 +1,7 @@
+# Binários e arquivos temporários de deploy local
+cloudflared.exe
+deploy_surge.js
+node_modules/
+.vercel/
+.DS_Store
+Thumbs.db

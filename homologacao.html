@@ -1,0 +1,1687 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal de Homologação & Validação Técnica | Shopping das Casas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-app: #f1f5f9;
+      --bg-card: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --text-light: #64748b;
+      --primary: #1b4332;
+      --primary-light: #2d6a4f;
+      --accent: #d97706;
+      --accent-light: #fef3c7;
+      --border: #e2e8f0;
+      --success: #16a34a;
+      --success-bg: #dcfce7;
+      --warning: #d97706;
+      --warning-bg: #fef3c7;
+      --danger: #dc2626;
+      --danger-bg: #fee2e2;
+      --radius: 14px;
+      --shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.06);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-app);
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+
+    /* TOP AGENCY BAR */
+    .agency-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #0f172a;
+      color: #fff;
+      padding: 0.85rem 1.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    }
+
+    .agency-header-inner {
+      max-width: 1600px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .brand-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .brand-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #2d6a4f, #d97706);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: #fff;
+    }
+
+    .brand-titles h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .brand-titles span {
+      display: block;
+      font-size: 0.75rem;
+      color: #94a3b8;
+    }
+
+    /* PROGRESS TRACKER IN HEADER */
+    .progress-widget {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      background: rgba(255,255,255,0.07);
+      padding: 0.45rem 0.9rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .progress-bar-wrap {
+      width: 130px;
+      height: 8px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #22c55e, #f59e0b);
+      transition: width 0.3s ease;
+    }
+
+    .progress-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #e2e8f0;
+      white-space: nowrap;
+    }
+
+    /* HEADER ACTIONS */
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-header {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.5rem 0.9rem;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.08);
+      color: #fff;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .btn-header:hover {
+      background: rgba(255,255,255,0.16);
+    }
+
+    .btn-header.active {
+      background: #2d6a4f;
+      border-color: #40916c;
+    }
+
+    .btn-header.accent {
+      background: #d97706;
+      border-color: #f59e0b;
+      color: #fff;
+    }
+
+    .btn-header.accent:hover {
+      background: #b45309;
+    }
+
+    /* WORKSPACE LAYOUT (SPLIT VIEW OR FULL VIEW) */
+    .workspace {
+      max-width: 1600px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .workspace.split-active {
+      grid-template-columns: minmax(520px, 54%) 1fr;
+      align-items: start;
+    }
+
+    /* LIVE PREVIEW PANEL */
+    .preview-dock {
+      display: none;
+      position: sticky;
+      top: 78px;
+      height: calc(100vh - 98px);
+      background: #0f172a;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 12px 32px rgba(15, 23, 42, 0.18);
+      border: 1px solid #334155;
+      flex-direction: column;
+    }
+
+    .workspace.split-active .preview-dock {
+      display: flex;
+    }
+
+    .preview-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.65rem 1rem;
+      background: #1e293b;
+      border-bottom: 1px solid #334155;
+      color: #cbd5e1;
+      font-size: 0.78rem;
+      gap: 0.5rem;
+    }
+
+    .preview-url-box {
+      background: #0f172a;
+      padding: 0.3rem 0.75rem;
+      border-radius: 6px;
+      border: 1px solid #334155;
+      color: #94a3b8;
+      font-family: monospace;
+      font-size: 0.75rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      flex: 1;
+    }
+
+    .device-toggles {
+      display: flex;
+      gap: 0.35rem;
+    }
+
+    .device-btn {
+      background: #0f172a;
+      color: #cbd5e1;
+      border: 1px solid #334155;
+      padding: 0.25rem 0.55rem;
+      border-radius: 6px;
+      font-size: 0.73rem;
+      cursor: pointer;
+    }
+
+    .device-btn.active {
+      background: #d97706;
+      color: #fff;
+      border-color: #d97706;
+    }
+
+    .iframe-container {
+      flex: 1;
+      background: #090d16;
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+      overflow: hidden;
+    }
+
+    .iframe-container iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: #fff;
+      transition: width 0.3s ease;
+    }
+
+    .iframe-container.mobile-mode iframe {
+      width: 390px;
+      margin: 12px auto;
+      height: calc(100% - 24px);
+      border-radius: 24px;
+      border: 6px solid #334155;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    /* QUESTIONNAIRE CONTAINER */
+    .questionnaire-column {
+      max-width: 960px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    /* INTRO HERO CARD */
+    .intro-card {
+      background: linear-gradient(135deg, #1b4332 0%, #0f172a 100%);
+      color: #fff;
+      padding: 2rem;
+      border-radius: var(--radius);
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .intro-badge {
+      display: inline-block;
+      background: rgba(217, 119, 6, 0.25);
+      border: 1px solid rgba(251, 191, 36, 0.4);
+      color: #fde68a;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 0.28rem 0.75rem;
+      border-radius: 99px;
+      margin-bottom: 0.85rem;
+    }
+
+    .intro-card h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.65rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .intro-card p {
+      color: #cbd5e1;
+      font-size: 0.94rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .client-meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0.85rem;
+      background: rgba(255,255,255,0.06);
+      padding: 1rem;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .meta-field label {
+      display: block;
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      color: #94a3b8;
+      margin-bottom: 0.25rem;
+      font-weight: 600;
+    }
+
+    .meta-field input {
+      width: 100%;
+      padding: 0.5rem 0.7rem;
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(15, 23, 42, 0.6);
+      color: #fff;
+      font-size: 0.88rem;
+      font-family: inherit;
+    }
+
+    .meta-field input:focus {
+      outline: 2px solid #f59e0b;
+      border-color: transparent;
+    }
+
+    /* MODULE CARD */
+    .module-card {
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 1.6rem;
+      margin-bottom: 1.25rem;
+      box-shadow: var(--shadow);
+      transition: border-color 0.2s;
+    }
+
+    .module-card.status-aprovado {
+      border-left: 5px solid var(--success);
+    }
+
+    .module-card.status-ajustes {
+      border-left: 5px solid var(--warning);
+    }
+
+    .module-card.status-alterar {
+      border-left: 5px solid var(--danger);
+    }
+
+    .module-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+
+    .module-title-group {
+      flex: 1;
+      min-width: 240px;
+    }
+
+    .module-step {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--primary-light);
+      background: #e6f4ea;
+      padding: 0.2rem 0.6rem;
+      border-radius: 6px;
+      margin-bottom: 0.4rem;
+    }
+
+    .module-title-group h3 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.22rem;
+      color: var(--text-main);
+    }
+
+    .module-title-group p {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+    }
+
+    .btn-jump-section {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.45rem 0.85rem;
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--primary);
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .btn-jump-section:hover {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    /* STATUS PILLS */
+    .status-selector-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .status-pills {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 0.6rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .status-pill {
+      position: relative;
+    }
+
+    .status-pill input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .status-pill label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      padding: 0.65rem 0.8rem;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      font-size: 0.84rem;
+      font-weight: 700;
+      cursor: pointer;
+      background: #f8fafc;
+      color: var(--text-muted);
+      transition: all 0.18s;
+      text-align: center;
+    }
+
+    .status-pill input[value="Aprovado"]:checked + label {
+      background: var(--success-bg);
+      border-color: var(--success);
+      color: #14532d;
+    }
+
+    .status-pill input[value="Aprovado com Ajustes"]:checked + label {
+      background: var(--warning-bg);
+      border-color: var(--warning);
+      color: #78350f;
+    }
+
+    .status-pill input[value="Precisa de Alteração"]:checked + label {
+      background: var(--danger-bg);
+      border-color: var(--danger);
+      color: #7f1d1d;
+    }
+
+    /* CURRENT SITE DATA SUMMARY BOX */
+    .current-data-box {
+      background: #f8fafc;
+      border: 1px dashed #cbd5e1;
+      border-radius: 10px;
+      padding: 0.9rem 1.1rem;
+      margin-bottom: 1.15rem;
+      font-size: 0.85rem;
+    }
+
+    .current-data-box strong {
+      color: var(--primary);
+      display: block;
+      margin-bottom: 0.35rem;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .current-data-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 0.35rem 1rem;
+      color: var(--text-muted);
+    }
+
+    .current-data-list li::before {
+      content: "• ";
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    /* CHECKLIST QUESTIONS */
+    .questions-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      margin-bottom: 1.15rem;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.65rem;
+      background: #fff;
+      padding: 0.65rem 0.85rem;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .check-item:hover {
+      background: #f8fafc;
+    }
+
+    .check-item input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      margin-top: 0.15rem;
+      accent-color: var(--primary);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .check-item span {
+      font-size: 0.88rem;
+      color: var(--text-main);
+    }
+
+    /* SPECIFIC INPUT GRID INSIDE MODULES */
+    .specific-inputs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 0.85rem;
+      margin-bottom: 1rem;
+    }
+
+    .input-group label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 0.3rem;
+    }
+
+    .input-group input,
+    .input-group select {
+      width: 100%;
+      padding: 0.55rem 0.75rem;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 0.86rem;
+      font-family: inherit;
+      background: #fff;
+    }
+
+    /* NOTES TEXTAREA */
+    .notes-area label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 0.35rem;
+    }
+
+    .notes-area textarea {
+      width: 100%;
+      min-height: 78px;
+      padding: 0.7rem 0.85rem;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.88rem;
+      resize: vertical;
+    }
+
+    .notes-area textarea:focus,
+    .input-group input:focus {
+      outline: 2px solid var(--primary-light);
+      border-color: transparent;
+    }
+
+    /* EXPORT FOOTER PANEL */
+    .export-card {
+      background: #fff;
+      border: 2px solid var(--primary);
+      border-radius: var(--radius);
+      padding: 2rem;
+      margin-top: 2rem;
+      margin-bottom: 3rem;
+      box-shadow: 0 12px 30px rgba(27, 67, 50, 0.12);
+    }
+
+    .export-card h3 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.4rem;
+      color: var(--primary);
+      margin-bottom: 0.4rem;
+    }
+
+    .export-card p {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .export-actions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 0.85rem;
+    }
+
+    .btn-export {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      padding: 0.9rem 1.2rem;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.92rem;
+      cursor: pointer;
+      border: none;
+      transition: transform 0.15s, box-shadow 0.15s;
+      font-family: inherit;
+    }
+
+    .btn-export:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+    }
+
+    .btn-whatsapp {
+      background: #16a34a;
+      color: #fff;
+    }
+
+    .btn-pdf {
+      background: #0f172a;
+      color: #fff;
+    }
+
+    .btn-copy {
+      background: #f1f5f9;
+      color: #0f172a;
+      border: 1px solid #cbd5e1;
+    }
+
+    .btn-download {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .agency-phone-config {
+      margin-top: 1.2rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      font-size: 0.82rem;
+      color: var(--text-light);
+    }
+
+    .agency-phone-config input {
+      padding: 0.4rem 0.65rem;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      width: 190px;
+    }
+
+    /* TOAST */
+    .toast-msg {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #0f172a;
+      color: #fff;
+      padding: 0.85rem 1.25rem;
+      border-radius: 10px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+      z-index: 9999;
+      opacity: 0;
+      transform: translateY(15px);
+      pointer-events: none;
+      transition: all 0.25s ease;
+    }
+
+    .toast-msg.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* PRINT / PDF STYLES */
+    @media print {
+      body {
+        background: #fff;
+      }
+      .agency-header,
+      .preview-dock,
+      .btn-jump-section,
+      .export-card {
+        display: none !important;
+      }
+      .workspace,
+      .workspace.split-active {
+        display: block;
+        padding: 0;
+      }
+      .questionnaire-column {
+        max-width: 100%;
+      }
+      .intro-card {
+        background: #fff !important;
+        color: #000 !important;
+        border: 2px solid #000;
+        padding: 1.2rem;
+      }
+      .intro-card p,
+      .meta-field label,
+      .meta-field input {
+        color: #000 !important;
+        background: transparent !important;
+      }
+      .module-card {
+        break-inside: avoid;
+        box-shadow: none;
+        border: 1px solid #94a3b8;
+        margin-bottom: 1rem;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .workspace.split-active {
+        grid-template-columns: 1fr;
+      }
+      .workspace.split-active .preview-dock {
+        position: relative;
+        top: 0;
+        height: 520px;
+        margin-bottom: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP AGENCY BAR -->
+  <header class="agency-header">
+    <div class="agency-header-inner">
+      <div class="brand-badge">
+        <div class="brand-icon">SC</div>
+        <div class="brand-titles">
+          <h1>Portal de Homologação & Validação do Cliente</h1>
+          <span>Projeto: Shopping das Casas Construções e Materiais (v1.0)</span>
+        </div>
+      </div>
+
+      <div class="progress-widget">
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill" id="progressBarFill"></div>
+        </div>
+        <span class="progress-label" id="progressText">0 de 8 etapas avaliadas (0%)</span>
+      </div>
+
+      <div class="header-controls">
+        <button type="button" class="btn-header active" id="btnToggleSplit" onclick="toggleSplitView()">
+          🖥️ Dividir Tela (Ver Site + Questionário)
+        </button>
+        <a href="index.html" target="_blank" class="btn-header">
+          🔗 Abrir Site em Nova Guia
+        </a>
+        <button type="button" class="btn-header accent" onclick="scrollToExport()">
+          ✅ Finalizar & Enviar Parecer
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN WORKSPACE -->
+  <main class="workspace split-active" id="mainWorkspace">
+
+    <!-- LEFT: EMBEDDED LIVE SITE PREVIEW -->
+    <aside class="preview-dock" id="previewDock">
+      <div class="preview-toolbar">
+        <span>🔴 <strong>AO VIVO:</strong></span>
+        <div class="preview-url-box" id="previewUrlDisplay">https://shoppingdascasas.vercel.app/#hero</div>
+        <div class="device-toggles">
+          <button type="button" class="device-btn active" id="btnDesktopMode" onclick="setPreviewDevice('desktop')">💻 Desktop</button>
+          <button type="button" class="device-btn" id="btnMobileMode" onclick="setPreviewDevice('mobile')">📱 Celular</button>
+        </div>
+      </div>
+      <div class="iframe-container" id="iframeContainer">
+        <iframe id="sitePreviewFrame" src="index.html#hero" title="Preview ao vivo Shopping das Casas"></iframe>
+      </div>
+    </aside>
+
+    <!-- RIGHT: STRUCTURED AGENCY QUESTIONNAIRE -->
+    <section class="questionnaire-column">
+
+      <!-- INTRO & CLIENT IDENTIFICATION -->
+      <div class="intro-card">
+        <span class="intro-badge">Checklist Oficial de Entrega & Homologação</span>
+        <h2>Bem-vindo à Análise Técnica do seu Novo Site</h2>
+        <p>
+          Elaboramos este ambiente interativo para que você avalie cada seção do novo portal da <strong>Shopping das Casas</strong>.
+          Clique em <em>"Ver esta seção no site"</em> em cada etapa para inspecionar o visual ao lado e marque se está aprovado ou se deseja ajustes. Suas respostas ficam salvas automaticamente.
+        </p>
+
+        <div class="client-meta-grid">
+          <div class="meta-field">
+            <label for="reviewerName">Nome do Responsável / Avaliador</label>
+            <input type="text" id="reviewerName" placeholder="Ex: Diretoria Shopping das Casas" data-persist="meta_name">
+          </div>
+          <div class="meta-field">
+            <label for="reviewerRole">Cargo / Setor</label>
+            <input type="text" id="reviewerRole" placeholder="Ex: Sócio-Proprietário / Comercial" data-persist="meta_role">
+          </div>
+          <div class="meta-field">
+            <label for="reviewerPhone">WhatsApp de Contato</label>
+            <input type="text" id="reviewerPhone" placeholder="(47) 99999-9999" data-persist="meta_phone">
+          </div>
+        </div>
+      </div>
+
+      <!-- =====================================================
+           MÓDULO 1: IDENTIDADE VISUAL, TOPO & POSICIONAMENTO
+           ===================================================== -->
+      <article class="module-card" data-module="1" id="mod-1">
+        <div class="module-header">
+          <div class="module-title-group">
+            <span class="module-step">Etapa 1 de 8 • Identidade & Cabeçalho</span>
+            <h3>1. Identidade Visual, Cores, Logotipo e Barra de Topo</h3>
+            <p>Avaliação das cores institucionais (Verde Floresta, Madeira Nobre e Âmbar), tipografia e informações do cabeçalho fixo.</p>
+          </div>
+          <button type="button" class="btn-jump-section" onclick="navigatePreview('#topbar')">
+            👁️ Ver Topo no Site
+          </button>
+        </div>
+
+        <div class="current-data-box">
+          <strong>📌 O que está configurado hoje no topo do site:</strong>
+          <ul class="current-data-list">
+            <li>Localização no Topo: Showroom Araquari / Joinville - SC (Itinga)</li>
+            <li>Horário: Seg a Sex: 07:30 às 17:30 | Sáb: 07:30 às 12:00</li>
+            <li>Destaque Social: @shoppingdascasas (+138k seguidores)</li>
+            <li>Telefone Fixo no Topo: (47) 3454-4035</li>
+          </ul>
+        </div>
+
+        <span class="status-selector-label">Parecer geral desta seção:</span>
+        <div class="status-pills">
+          <div class="status-pill">
+            <input type="radio" name="status_mod1" id="s1_ok" value="Aprovado" data-persist="status_mod1">
+            <label for="s1_ok">✅ Aprovado</label>
+          </div>
+          <div class="status-pill">
+            <input type="radio" name="status_mod1" id="s1_adj" value="Aprovado com Ajustes" data-persist="status_mod1">
+            <label for="s1_adj">⚠️ Aprovado com Ajustes</label>
+          </div>
+          <div class="status-pill">
+            <input type="radio" name="status_mod1" id="s1_chg" value="Precisa de Alteração" data-persist="status_mod1">
+            <label for="s1_chg">🔄 Precisa de Alteração</label>
+          </div>
+        </div>
+
+        <div class="questions-list">
+          <label class="check-item">
+            <input type="checkbox" data-persist="m1_q1">
+            <span>A paleta de cores (Verde Escuro, tons amadeirados/âmbar e fundo claro) representa bem a marca da Shopping das Casas?</span>
+          </label>
+          <label class="check-item">
+            <input type="checkbox" data-persist="m1_q2">
+            <span>Deseja enviar o arquivo do <strong>Logotipo Oficial</strong> (em PNG transparente ou Vetor/SVG) para substituir o selo tipográfico atual do topo?</span>
+          </label>
+          <label class="check-item">
+            <input type="checkbox" data-persist="m1_q3">
+            <span>O horário de atendimento exibido na barra superior (Seg-Sex 07:30–17:30 e Sáb 07:30–12:00) está 100% correto?</span>
+          </label>
+        </div>
+
+        <div class="notes-area">
+          <label for="notes_mod1">Observações ou ajustes solicitados para o Topo / Identidade Visual:</label>
+          <textarea id="notes_mod1" placeholder="Ex: Gostaria de incluir o logotipo oficial em imagem; ajustar horário de sábado para 12:30..." data-persist="notes_mod1"></textarea>
+        </div>
+      </article>
+
+      <!-- =====================================================
+           MÓDULO 2: HERO SECTION (PRIMEIRA DOBRA & PROMESSA)
+           ===================================================== -->
+      <article class="module-card" data-module="2" id="mod-2">
+        <div class="module-header">
+          <div class="module-title-group">
+            <span class="module-step">Etapa 2 de 8 • Primeira Impressão (Hero)</span>
+            <h3>2. Capa Principal (Hero), Chamada Comercial e Indicadores</h3>
+            <p>Análise da primeira tela que o cliente vê ao abrir o site, promessa de entrega, preço inicial e selos de autoridade.</p>
+          </div>
+          <button type="button" class="btn-jump-section" onclick="navigatePreview('#hero')">
+            👁️ Ver Capa no Site
+          </button>
+        </div>
+
+        <div class="current-data-box">
+          <strong>📌 O que está configurado hoje na Capa Principal:</strong>
+          <ul class="current-data-list">
+            <li>Título: "Sua Casa Própria Pronta em Semanas, com Preço Fechado em Contrato"</li>
+            <li>Preço âncora em destaque: "A partir de R$ 37.500"</li>
+            <li>Indicadores: +15 Anos de Tradição | +850 Casas Entregues | +138 mil Seguidores</li>
+            <li>Garantia exibida: 5 Anos de Garantia Estrutural (CREA/CFT)</li>
+          </ul>
+        </div>
+
+        <span class="status-selector-label">Parecer geral desta seção:</span>
+        <div class="status-pills">
+          <div class="status-pill">
+            <input type="radio" name="status_mod2" id="s2_ok" value="Aprovado" data-persist="status_mod2">
+            <label for="s2_ok">✅ Aprovado</label>
+          </div>
+          <div class="status-pill">
+            <input type="radio" name="status_mod2" id="s2_adj" value="Aprovado com Ajustes" data-persist="status_mod2">
+            <label for="s2_adj">⚠️ Aprovado com Ajustes</label>
+          </div>
+          <div class="status-pill">
+            <input type="radio" name="status_mod2" id="s2_chg" value="Precisa de Alteração" data-persist="status_mod2">
+            <label for="s2_chg">🔄 Precisa de Alteração</label>
+          </div>
+        </div>
+
+        <div class="specific-inputs">
+          <div class="input-group">
+            <label for="m2_min_price">Menor valor de casa para divulgar ("A partir de"):</label>
+            <input type="text" id="m2_min_price" value="R$ 37.500" data-persist="m2_min_price">
+          </div>
+          <div class="input-group">
+            <label for="m2_houses_built">Número oficial de casas entregues:</label>
+            <input type="text" id="m2_houses_built" value="+850 casas entregues" data-persist="m2_houses_built">
+          </div>
+        </div>
+
+        <div class="questions-list">
+          <label class="check-item">
+            <input type="checkbox" data-persist="m2_q1">
+            <span>A frase principal (<em>"Sua Casa Própria Pronta em Semanas, com Preço Fechado em Contrato"</em>) está alinhada com o discurso comercial da equipe de vendas?</span>
+          </label>
+          <label class="check-item">
+            <input type="checkbox" data-persist="m2_q2">
+            <span>Deseja substituir a foto principal da capa por uma foto real de uma obra emblemática da Shopping das Casas (ou adicionar um vídeo curto de fundo)?</span>
+          </label>
+        </div>
+
+        <div class="notes-area">
+          <label for="notes_mod2">Observações ou ajustes para a Capa Principal (Hero):</label>
+          <textarea id="notes_mod2" placeholder="Descreva se deseja mudar algum texto, número de obras entregues ou foto de destaque..." data-persist="notes_mod2"></textarea>
+        </div>
+      </article>
+
+      <!-- =====================================================
+           MÓDULO 3: SIMULADOR INTELIGENTE DE ORÇAMENTO
+           ===================================================== -->
+      <article class="module-card" data-module="3" id="mod-3">
+        <div class="module-header">
+          <div class="module-title-group">
+            <span class="module-step">Etapa 3 de 8 • Motor Comercial & Conversão</span>
+            <h3>3. Simulador Interativo de Orçamento e Regras de Preço</h3>
+            <p>Validação dos valores por m² utilizados no cálculo estimado e dos dados solicitados ao lead antes de enviar para o WhatsApp.</p>
+          </div>
+          <button type="button" class="btn-jump-section" onclick="navigatePreview('#simulador')">
+            👁️ Testar Simulador no Site
+          </button>
+        </div>
+
+        <div class="current-data-box">
+          <strong>📌 Fórmula atual configurada no Simulador:</strong>
+          <ul class="current-data-list">
+            <li>Concreto Pré-Moldado: <strong>R$ 1.180 / m²</strong></li>
+            <li>Madeira Nobre Tratada (Autoclave): <strong>R$ 980 / m²</strong></li>
+            <li>Mista (Alvenaria + Madeira): <strong>R$ 1.250 / m²</strong></li>
+            <li>Adicional por Dormitórios: 1 Quarto (+R$ 0) | 2 Quartos (+R$ 3.800) | 3 Quartos (+R$ 7.500)</li>
+            <li>Piso mínimo da simulação: <strong>R$ 37.500</strong></li>
+            <li>Cidades listadas: Araquari / Joinville, Balneário Barra do Sul, São Francisco do Sul, Itapoá, Guaramirim / Jaraguá do Sul</li>
+          </ul>
+        </div>
+
+        <span class="status-selector-label">Parecer geral desta seção:</span>
+        <div class="status-pills">
+          <div class="status-pill">
+            <input type="radio" name="status_mod3" id="s3_ok" value="Aprovado" data-persist="status_mod3">
+            <label for="s3_ok">✅ Aprovado</label>
+          </div>
+          <div class="status-pill">
+            <input type="radio" name="status_mod3" id="s3_adj" value="Aprovado com Ajustes" data-persist="status_mod3">
+            <label for="s3_adj">⚠️ Aprovado com Ajustes</label>
+          </div>
+          <div class="status-pill">
+            <input type="radio" name="status_mod3" id="s3_chg" value="Precisa de Alteração" data-persist="status_mod3">
+            <label for="s3_chg">🔄 Precisa de Alteração</label>
+          </div>
+        </div>
+
+        <div class="specific-inputs">
+          <div class="input-group">
+            <label for="m3_price_concreto">Valor m² Concreto (R$):</label>
+            <input type="text" id="m3_price_concreto" value="R$ 1.180/m²" data-persist="m3_price_concreto">
+          </div>
+          <div class="input-group">
+            <label for="m3_price_madeira">Valor m² Madeira Autoclave (R$):</label>
+            <input type="text" id="m3_price_madeira" value="R$ 980/m²" data-persist="m3_price_madeira">
+          </div>
+          <div class="input-group">
+            <label for="m3_price_mista">Valor m² Mista (R$):</label>
+            <input type="text" id="m3_price_mista" value="R$ 1.250/m²" data-persist="m3_price_mista">
+          </div>
+          <div class="input-group">
+            <label for="m3_show_price">Exibição do Valor no Simulador:</label>
+            <select id="m3_show_price" data-persist="m3_show_price">
+              <option value="Mostrar valor estimado + parcela">Mostrar valor estimado + parcela na tela</option>
+              <option value="Mostrar apenas valor total estimado">Mostrar apenas o valor total estimado (sem parcela)</option>
+              <option value="Ocultar preço na tela e revelar só no WhatsApp">Ocultar preço na tela e enviar apenas pelo WhatsApp</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="questions-list">
+          <label class="check-item">
+            <input type="checkbox" data-persist="m3_q1">
+            <span>Os valores médios por m² acima estão próximos da realidade comercial atual da loja?</span>
+          </label>
+          <label class="check-item">
+            <input type="checkbox" data-persist="m3_q2">
+            <span>Deseja incluir mais alguma cidade de atuação no seletor do simulador (ex: Barra Velha, Piçarras, Garuva, Campo Alegre)?</span>
+          </label>
+          <label class="check-item">
+            <input type="checkbox" data-persist="m3_q3">
+            <span>A mensagem automática que chega no WhatsApp da loja quando o cliente simula está clara e completa para os vendedores?</span>
+          </label>
+        </div>
+
+        <div class="notes-area">
+          <label for="notes_mod3">Observações sobre o Simulador de Orçamento e Regras de Preço:</label>
+          <textarea id="notes_mod3" placeholder="Informe se quiser alterar a fórmula, condições de entrada (ex: 40% entrada), parcelamento ou cidades atendidas..." data-persist="notes_mod3"></textarea>
+        </div>
+      </article>
+
+      <!-- =====================================================
+           MÓDULO 4: CATÁLOGO DE MODELOS & PLANTAS HUMANIZADAS
+           ===================================================== -->
+      <article class="module-card" data-module="4" id="mod-4">
+        <div class="module-header">
+          <div class="module-title-group">
+            <span class="module-step">Etapa 4 de 8 • Portfólio de Produtos</span>
+            <h3>4. Catálogo de Modelos de Casas e Modal de Planta Humanizada</h3>
+            <p>Avaliação dos 6 modelos em destaque, preços iniciais, metragens, descritivos técnicos e visualização de plantas.</p>
+          </div>
+          <button type="button" class="btn-jump-section" onclick="navigatePreview('#catalogo')">
+            👁️ Ver Catálogo no Site
+          </button>
+        </div>
+
+        <div class="current-data-box">
+          <strong>📌 Os 6 Modelos cadastrados hoje no Catálogo:</strong>
+          <ul class="current-data-list">
+            <li>1. <strong>Chalé Modelo Praia / Lazer (36m²)</strong> — 1 Quarto (Madeira) — A partir de R$ 37.500</li>
+            <li>2. <strong>Residencial Itinga Prime (54m²)</strong> — 2 Quartos (Concreto) — A partir de R$ 62.900</li>
+            <li>3. <strong>Villa Imperial Contemporânea (75m²)</strong> — 3 Quartos / 1 Suíte (Mista) — A partir de R$ 89.900</li>
+            <li>4. <strong>Casa Conforto Araquari (48m²)</strong> — 2 Quartos (Madeira Autoclave) — A partir de R$ 47.900</li>
+            <li>5. <strong>Residencial Joinville Plus (63m²)</strong> — 2 Quartos c/ Abrigo Carro (Concreto) — A partir de R$ 74.500</li>
+            <li>6. <strong> Chalé Serra & Mar (84m²)</strong> — 3 Quartos / Varanda Dupla — A partir de R$ 96.000</li>
+          </ul>
+        </div>
+
+        <span class="status-selector-label">Parecer geral desta seção:</span>
+        <div class="status-pills">
+          <div class="status-pill">
+            <input type="radio" name="status_mod4" id="s4_ok" value="Aprovado" data-persist="status_mod4">
+            <label for="s4_ok">✅ Aprovado</label>
+          </div>
+          <div class="status-pill">
+            <input type="radio" name="status_mod4" id="s4_adj" value="Aprovado com Ajustes" data-persist="status_mod4">
+            <label for="s4_adj">⚠️ Aprovado com Ajustes</label>
+          </div>
+          <div class="status-pill">
+            <input type="radio" name="status_mod4" id="s4_chg" value="Precisa de Alteração" data-persist="status_mod4">
+            <label for="s4_chg">🔄 Precisa de Alteração</label>
+          </div>
+        </div>
+
+        <div class="questions-list">
+          <label class="check-item">
+            <input type="checkbox" data-persist="m4_q1">
+            <span>Os nomes, metragens (36m², 48m², 54m², 63m², 75m², 84m²) e preços iniciais dos 6 modelos estão de acordo com a tabela vigente?</span>
+          </label>
+          <label class="check-item">
+            <input type="checkbox" data-persist="m4_q2">
+            <span>Os itens inclusos no modal "Ver Planta & Detalhes" (telhas esmaltadas, hidráulica/elétrica básica, banheiro em alvenaria) correspondem ao memorial descritivo padrão?</span>
+          </label>
+          <label class="check-item">
+            <input type="checkbox" data-persist="m4_q3">
+            <span>Você possui <strong>fotos reais das obras prontas</strong> e as <strong>plantas baixas reais</strong> de cada modelo para substituirmos as imagens ilustrativas?</span>
+          </label>
+        </div>
+
+        <div class="notes-area">
+          <label for="notes_mod4">Quais modelos, preços, fotos ou itens do memorial descritivo deseja alterar ou adicionar?</label>
+          <textarea id="notes_mod4" placeholder="Ex: Mudar o modelo de 36m² para 42m²; ajustar valor da casa de 54m²; enviar fotos reais pelo Drive..." data-persist="notes_mod4"></textarea>
+        </div>
+      </article>
+
+      <!-- =====================================================
+           MÓDULO 5: COMPARATIVO (PRÉ-FABRICADA VS ALVENARIA)
+           ===================================================== -->
+      <article class="module-card" data-module="5" id="mod-5">
+        <div class="module-header">
+          <div class="module-title-group">
+            <span class="module-step">Etapa 5 de 8 • Quebra de Objeções</span>
+            <h3>5. Quadro Comparativo: Shopping das Casas vs. Construção Comum</h3>
+            <p>Análise dos argumentos de venda para convencer o cliente indeciso entre pré-moldada/madeira e alvenaria tradicional.</p>
+          </div>
+          <button type="button" class="btn-jump-section" onclick="navigatePreview('#comparativo')">
+            👁️ Ver Comparativo no Site
+          </button>
+        </div>
+
+        <div class="current-data-box">
+          <strong>📌 Argumentos comparados na tabela hoje:</strong>
+          <ul class="current-data-list">
+            <li>Prazo de Entrega: <strong>30 a 45 dias úteis</strong> vs. 8 a 14 meses na obra comum</li>
+            <li>Orçamento: <strong>Preço 100% fechado em contrato</strong> vs. 30% a 40% de gastos extras</li>
+            <li>Economia Financeira: <strong>Até 35% mais econômico</strong> vs. Custo elevado</li>
+            <li>Desperdício de Material: <strong>Zero desperdício (industrializado)</strong> vs. Até 25% de perda em caçambas</li>
+            <li>Garantia e Gestão: <strong>Equipe própria + 5 anos de garantia</strong> vs. Dor de cabeça com múltiplos pedreiros</li>
+          </ul>
+        </div>
+
+        <span class="status-selector-label">Parecer geral desta seção:</span>
+        <div class="status-pills">
+          <div class="status-pill">
+            <input type="radio" name="status_mod5" id="s5_ok" value="Aprovado" data-persist="status_mod5">
+            <label for="s5_ok">✅ Aprovado</label>
+          </div>
+          <div class="status-pill">
+            <input type="radio" name="status_mod5" id="s5_adj" value="Aprovado com Ajustes" data-persist="status_mod5">
+            <label for="s5_adj">⚠️ Aprovado com Ajustes</label>
+          </div>
+          <div class="status-pill">
+            <input type="radio" name="status_mod5" id="s5_chg" value="Precisa de Alteração" data-persist="status_mod5">
+            <label for="s5_chg">🔄 Precisa de Alteração</label>
+          </div>
+        </div>
+
+        <div class="questions-list">
+          <label class="check-item">
+            <input type="checkbox" data-persist="m5_q1">
+            <span>O prazo médio informado de <strong>30 a 45 dias úteis</strong> (ou 30 a 90 dias conforme o porte) está seguro para constar no site sem gerar atrito comercial?</span>
+          </label>
+          <label class="check-item">
+            <input type="checkbox" data-persist="m5_q2">
+            <span>Os diferenciais de durabilidade e conforto térmico/acústico estão bem representados?</span>
+          </label>
+        </div>
+
+        <div class="notes-area">
+          <label for="notes_mod5">Observações sobre o Quadro Comparativo e Prazos:</label>
+          <textarea id="notes_mod5" placeholder="Ex: Alterar prazo médio para '30 a 90 dias úteis dependendo do modelo'..." data-persist="notes_mod5"></textarea>
+        </div>
+      </article>
+
+      <!-- =====================================================
+           MÓDULO 6: LOJA DE MATERIAIS DE CONSTRUÇÃO & MADEIREIRA
+           ===================================================== -->
+      <article class="module-card" data-module="6" id="mod-6">
+        <div class="module-header">
+          <div class="module-title-group">
+            <span class="module-step">Etapa 6 de 8 • Segunda Frente de Receita</span>
+            <h3>6. Seção Depósito de Materiais de Construção & Madeireira</h3>
+            <p>Validação do catálogo de materiais avulsos vendidos na loja física (Itinga / Araquari) com entrega própria.</p>
+          </div>
+          <button type="button" class="btn-jump-section" onclick="navigatePreview('#materiais')">
+            👁️ Ver Loja de Materiais no Site
+          </button>
+        </div>
+
+        <div class="current-data-box">
+          <strong>📌 Linhas de produtos destacadas hoje na seção de Materiais:</strong>
+          <ul class="current-data-list">
+            <li>Madeiramento Tratado em Autoclave (Pinus e Eucalipto com 15 anos de garantia biológica)</li>
+            <li>Telhas Cerâmicas Esmaltadas, Fibrocimento e Galvalume</li>
+            <li>Cimento, Argamassas, Tijolos, Blocos e Ferragens Armadas</li>
+            <li>Pisos Cerâmicos, Porcelanatos, Forros de PVC/Madeira e Kit Portas</li>
+            <li>Frota Própria com Entrega Rápida em Joinville, Araquari e Litoral Norte</li>
+          </ul>
+        </div>
+
+        <span class="status-selector-label">Parecer geral desta seção:</span>
+        <div class="status-pills">
+          <div class="status-pill">
+            <input type="radio" name="status_mod6" id="s6_ok" value="Aprovado" data-persist="status_mod6">
+            <label for="s6_ok">✅ Aprovado</label>
+          </div>
+          <div class="status-pill">
+            <input type="radio" name="status_mod6" id="s6_adj" value="Aprovado com Ajustes" data-persist="status_mod6">
+            <label for="s6_adj">⚠️ Aprovado com Ajustes</label>
+          </div>
+          <div class="status-pill">
+            <input type="radio" name="status_mod6" id="s6_chg" value="Precisa de Alteração" data-persist="status_mod6">
+            <label for="s6_chg">🔄 Precisa de Alteração</label>
+          </div>
+        </div>
+
+        <div class="questions-list">
+          <label class="check-item">
+            <input type="checkbox" data-persist="m6_q1">
+            <span>Todos os materiais listados acima fazem parte do estoque atual da loja?</span>
+          </label>
+          <label class="check-item">
+            <input type="checkbox" data-persist="m6_q2">
+            <span>Deseja destacar promoções específicas de materiais (ex: milheiro de tijolos, pacote de assoalho/forro, kit porta pronta)?</span>
+          </label>
+        </div>
+
+        <div class="notes-area">
+          <label for="notes_mod6">Observações sobre a seção de Materiais de Construção:</label>
+          <textarea id="notes_mod6" placeholder="Informe se desejar remover algum item que não trabalham ou destacar algum produto carro-chefe da madeireira..." data-persist="notes_mod6"></textarea>
+        </div>
+      </article>
+
+      <!-- =====================================================
+           MÓDULO 7: DEPOIMENTOS E PERGUNTAS FREQUENTES (FAQ)
+           ===================================================== -->
+      <article class="module-card" data-module="7" id="mod-7">
+        <div class="module-header">
+          <div class="module-title-group">
+            <span class="module-step">Etapa 7 de 8 • Prova Social & Políticas</span>
+            <h3>7. Depoimentos de Clientes e Perguntas Frequentes (FAQ)</h3>
+            <p>Conferência das respostas sobre formas de pagamento (entrada, financiamento, carro no negócio, FGTS) e depoimentos.</p>
+          </div>
+          <button type="button" class="btn-jump-section" onclick="navigatePreview('#faq')">
+            👁️ Ver Depoimentos e FAQ
+          </button>
+        </div>
+
+        <div class="current-data-box">
+          <strong>📌 Regras comerciais respondidas no FAQ hoje:</strong>
+          <ul class="current-data-list">
+            <li><strong>Formas de Pagamento:</strong> Entrada a partir de 40% + saldo parcelado conforme etapas da obra, cartão em até 18x ou financiamento bancário.</li>
+            <li><strong>Aceita Veículo?</strong> Sim, aceita carro ou moto como parte de pagamento (mediante avaliação).</li>
+            <li><strong>O que inclui no Chave na Mão?</strong> Fundação radier/baldrame, paredes, telhado, forro, aberturas, piso cerâmico, banheiro revestido, elétrica e hidráulica internas.</li>
+            <li><strong>Precisa ter terreno próprio?</strong> Sim, constrói no terreno do cliente (urbano, rural ou praia) e auxilia com parceiros se ainda não tiver terreno.</li>
+          </ul>
+        </div>
+
+        <span class="status-selector-label">Parecer geral desta seção:</span>
+        <div class="status-pills">
+          <div class="status-pill">
+            <input type="radio" name="status_mod7" id="s7_ok" value="Aprovado" data-persist="status_mod7">
+            <label for="s7_ok">✅ Aprovado</label>
+          </div>
+          <div class="status-pill">
+            <input type="radio" name="status_mod7" id="s7_adj" value="Aprovado com Ajustes" data-persist="status_mod7">
+            <label for="s7_adj">⚠️ Aprovado com Ajustes</label>
+          </div>
+          <div class="status-pill">
+            <input type="radio" name="status_mod7" id="s7_chg" value="Precisa de Alteração" data-persist="status_mod7">
+            <label for="s7_chg">🔄 Precisa de Alteração</label>
+          </div>
+        </div>
+
+        <div class="questions-list">
+          <label class="check-item">
+            <input type="checkbox" data-persist="m7_q1">
+            <span>A política de pagamento descrita no FAQ (entrada de 40%, parcelamento no boleto/cartão até 18x e aceitação de veículo sob avaliação) está exata?</span>
+          </label>
+          <label class="check-item">
+            <input type="checkbox" data-persist="m7_q2">
+            <span>A descrição do pacote "Chave na Mão" (fundação radier, piso, elétrica/hidráulica interna) confere com o contrato padrão da empresa?</span>
+          </label>
+          <label class="check-item">
+            <input type="checkbox" data-persist="m7_q3">
+            <span>Deseja enviar prints/vídeos de depoimentos reais do Instagram ou avaliações reais do Google Meu Negócio para colocarmos na seção de Depoimentos?</span>
+          </label>
+        </div>
+
+        <div class="notes-area">
+          <label for="notes_mod7">Observações sobre Condições de Pagamento, FAQ ou Depoimentos:</label>
+          <textarea id="notes_mod7" placeholder="Ex: Ajustar percentual de entrada; especificar se a fundação é cobrada à parte conforme desnível do terreno..." data-persist="notes_mod7"></textarea>
+        </div>
+      </article>
+
+      <!-- =====================================================
+           MÓDULO 8: DADOS CADASTRAIS, WHATSAPP, RODAPÉ & DOMÍNIO
+           ===================================================== -->
+      <article class="module-card" data-module="8" id="mod-8">
+        <div class="module-header">
+          <div class="module-title-group">
+            <span class="module-step">Etapa 8 de 8 • Dados Oficiais & Publicação Final</span>
+            <h3>8. Dados Cadastrais (CNPJ/Endereço), WhatsApp de Vendas e Domínio</h3>
+            <p>Validação final dos canais de contato para garantir que nenhum lead seja perdido e configuração do domínio oficial.</p>
+          </div>
+          <button type="button" class="btn-jump-section" onclick="navigatePreview('#contato')">
+            👁️ Ver Rodapé e Contatos
+          </button>
+        </div>
+
+        <div class="current-data-box">
+          <strong>📌 Dados Oficiais configurados no Rodapé e Botões de Conversão:</strong>
+          <ul class="current-data-list">
+            <li><strong>Razão Social:</strong> Shopping das Casas Construções Ltda.</li>
+            <li><strong>CNPJ:</strong> 13.048.868/0001-38</li>
+            <li><strong>Endereço:</strong> Rua Waldemiro José Borges, Bairro Itinga, Araquari / divisa com Joinville - SC</li>
+            <li><strong>WhatsApp Principal (Botões e Simulador):</strong> (47) 99133-7816</li>
+            <li><strong>Telefone Fixo:</strong> (47) 3454-4035</li>
+            <li><strong>Instagram Oficial:</strong> https://www.instagram.com/shoppingdascasas/</li>
+          </ul>
+        </div>
+
+        <span class="status-selector-label">Parecer geral desta seção:</span>
+        <div class="status-pills">
+          <div class="status-pill">
+            <input type="radio" name="status_mod8" id="s8_ok" value="Aprovado" data-persist="status_mod8">
+            <label for="s8_ok">✅ Aprovado</label>
+          </div>
+          <div class="status-pill">
+            <input type="radio" name="status_mod8" id="s8_adj" value="Aprovado com Ajustes" data-persist="status_mod8">
+            <label for="s8_adj">⚠️ Aprovado com Ajustes</label>
+          </div>
+          <div class="status-pill">
+            <input type="radio" name="status_mod8" id="s8_chg" value="Precisa de Alteração" data-persist="status_mod8">
+            <label for="s8_chg">🔄 Precisa de Alteração</label>
+          </div>
+        </div>
+
+        <div class="specific-inputs">
+          <div class="input-group">
+            <label for="m8_whatsapp_oficial">WhatsApp Oficial que receberá os orçamentos:</label>
+            <input type="text" id="m8_whatsapp_oficial" value="(47) 99133-7816" data-persist="m8_whatsapp_oficial">
+          </div>
+          <div class="input-group">
+            <label for="m8_dominio">Domínio Oficial para apontamento (.com.br):</label>
+            <input type="text" id="m8_dominio" value="www.shoppingdascasas.com.br" data-persist="m8_dominio">
+          </div>
+        </div>
+
+        <div class="questions-list">
+          <label class="check-item">
+            <input type="checkbox" data-persist="m8_q1">
+            <span>O número de WhatsApp <strong>(47) 99133-7816</strong> e o fixo <strong>(47) 3454-4035</strong> estão corretos para receber todos os leads do site?</span>
+          </label>
+          <label class="check-item">
+            <input type="checkbox" data-persist="m8_q2">
+            <span>O endereço na Rua Waldemiro José Borges (Itinga) possui número predial específico ou ponto de referência que devemos adicionar?</span>
+          </label>
+          <label class="check-item">
+            <input type="checkbox" data-persist="m8_q3">
+            <span>Deseja instalar códigos de rastreamento de tráfego pago (<strong>Pixel da Meta / Facebook Ads, Google Analytics 4, Google Tag Manager</strong>) antes do lançamento oficial?</span>
+          </label>
+        </div>
+
+        <div class="notes-area">
+          <label for="notes_mod8">Observações finais, dados de domínio (Registro.br) ou códigos de tráfego pago:</label>
+          <textarea id="notes_mod8" placeholder="Informe número predial exato, se possuem outro WhatsApp para materiais de construção ou observações gerais..." data-persist="notes_mod8"></textarea>
+        </div>
+      </article>
+
+      <!-- =====================================================
+           PAINEL DE EXPORTAÇÃO E ENVIO DO PARECER
+           ===================================================== -->
+      <section class="export-card" id="exportSection">
+        <h3>🚀 Finalizar Homologação e Exportar Parecer</h3>
+        <p>
+          Após preencher sua avaliação acima, escolha como deseja enviar ou salvar o relatório técnico de homologação. Todas as suas respostas e observações serão consolidadas automaticamente:
+        </p>
+
+        <div class="export-actions">
+          <button type="button" class="btn-export btn-whatsapp" onclick="exportToWhatsApp()">
+            📲 Enviar Parecer via WhatsApp
+          </button>
+          <button type="button" class="btn-export btn-pdf" onclick="window.print()">
+            🖨️ Gerar PDF / Imprimir Laudo
+          </button>
+          <button type="button" class="btn-export btn-download" onclick="downloadReportTxt()">
+            📥 Baixar Relatório (.TXT)
+          </button>
+          <button type="button" class="btn-export btn-copy" onclick="copyReportClipboard()">
+            📋 Copiar Parecer Completo
+          </button>
+        </div>
+
+        <div class="agency-phone-config">
+          <span>📞 Enviar parecer para o WhatsApp do Desenvolvedor/Agência (opcional, deixe em branco para escolher o contato na hora):</span>
+          <input type="text" id="agencyWhatsappNumber" placeholder="Ex: 5547999999999" data-persist="agency_whatsapp">
+        </div>
+      </section>
+
+    </section>
+  </main>
+
+  <div class="toast-msg" id="toastMsg">Respostas salvas automaticamente!</div>
+
+  <script>
+    const STORAGE_KEY = 'sdc_homologacao_v1';
+
+    const MODULE_TITLES = {
+      1: '1. Identidade Visual, Cores, Logotipo e Topo',
+      2: '2. Capa Principal (Hero) e Promessa Comercial',
+      3: '3. Simulador de Orçamento e Regras de Preço',
+      4: '4. Catálogo de Modelos e Plantas Humanizadas',
+      5: '5. Quadro Comparativo (Pré-Moldada vs Alvenaria)',
+      6: '6. Loja de Materiais de Construção & Madeireira',
+      7: '7. Depoimentos de Clientes e FAQ (Pagamentos)',
+      8: '8. Dados Cadastrais, WhatsApp Oficial e Domínio'
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadSavedState();
+      bindAutoSave();
+      updateProgress();
+    });
+
+    function bindAutoSave() {
+      const elements = document.querySelectorAll('[data-persist]');
+      elements.forEach(el => {
+        el.addEventListener('change', () => {
+          saveState();
+          updateProgress();
+          showToast('✓ Progresso salvo automaticamente');
+        });
+        if (el.tagName === 'TEXTAREA' || el.type === 'text') {
+          el.addEventListener('input', () => {
+            saveState();
+          });
+        }
+      });
+    }
+
+    function saveState() {
+      const data = {};
+      const elements = document.querySelectorAll('[data-persist]');
+      elements.forEach(el => {
+        const key = el.getAttribute('data-persist');
+        if (el.type === 'checkbox') {
+          data[key] = el.checked;
+        } else if (el.type === 'radio') {
+          if (el.checked) {
+            data[key] = el.value;
+          }
+        } else {
+          data[key] = el.value;
+        }
+      });
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    }
+
+    function loadSavedState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return;
+        const data = JSON.parse(raw);
+        const elements = document.querySelectorAll('[data-persist]');
+        elements.forEach(el => {
+          const key = el.getAttribute('data-persist');
+          if (!(key in data)) return;
+          if (el.type === 'checkbox') {
+            el.checked = Boolean(data[key]);
+          } else if (el.type === 'radio') {
+            el.checked = (el.value === data[key]);
+          } else {
+            el.value = data[key];
+          }
+        });
+      } catch (e) {
+        console.error('Erro ao carregar dados salvos:', e);
+      }
+    }
+
+    function updateProgress() {
+      let evaluatedCount = 0;
+      for (let i = 1; i <= 8; i++) {
+        const card = document.getElementById(`mod-${i}`);
+        const checkedRadio = document.querySelector(`input[name="status_mod${i}"]:checked`);
+        card.classList.remove('status-aprovado', 'status-ajustes', 'status-alterar');
+
+        if (checkedRadio) {
+          evaluatedCount++;
+          if (checkedRadio.value === 'Aprovado') card.classList.add('status-aprovado');
+          if (checkedRadio.value === 'Aprovado com Ajustes') card.classList.add('status-ajustes');
+          if (checkedRadio.value === 'Precisa de Alteração') card.classList.add('status-alterar');
+        }
+      }
+
+      const pct = Math.round((evaluatedCount / 8) * 100);
+      document.getElementById('progressBarFill').style.width = `${pct}%`;
+      document.getElementById('progressText').textContent = `${evaluatedCount} de 8 etapas avaliadas (${pct}%)`;
+    }
+
+    function navigatePreview(hash) {
+      const workspace = document.getElementById('mainWorkspace');
+      if (!workspace.classList.contains('split-active')) {
+        workspace.classList.add('split-active');
+        document.getElementById('btnToggleSplit').classList.add('active');
+      }
+      const frame = document.getElementById('sitePreviewFrame');
+      frame.src = `index.html${hash}`;
+      document.getElementById('previewUrlDisplay').textContent = `https://shoppingdascasas.vercel.app/${hash}`;
+    }
+
+    function toggleSplitView() {
+      const workspace = document.getElementById('mainWorkspace');
+      const btn = document.getElementById('btnToggleSplit');
+      workspace.classList.toggle('split-active');
+      btn.classList.toggle('active');
+    }
+
+    function setPreviewDevice(mode) {
+      const container = document.getElementById('iframeContainer');
+      const btnDesktop = document.getElementById('btnDesktopMode');
+      const btnMobile = document.getElementById('btnMobileMode');
+      if (mode === 'mobile') {
+        container.classList.add('mobile-mode');
+        btnMobile.classList.add('active');
+        btnDesktop.classList.remove('active');
+      } else {
+        container.classList.remove('mobile-mode');
+        btnDesktop.classList.add('active');
+        btnMobile.classList.remove('active');
+      }
+    }
+
+    function scrollToExport() {
+      document.getElementById('exportSection').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function buildFullReportText() {
+      const reviewerName = document.getElementById('reviewerName').value.trim() || 'Não informado';
+      const reviewerRole = document.getElementById('reviewerRole').value.trim() || 'Não informado';
+      const reviewerPhone = document.getElementById('reviewerPhone').value.trim() || 'Não informado';
+      const now = new Date().toLocaleString('pt-BR');
+
+      let lines = [];
+      lines.push('==================================================');
+      lines.push('📋 LAUDO DE HOMOLOGAÇÃO DO SITE - SHOPPING DAS CASAS');
+      lines.push('==================================================');
+      lines.push(`Data da Avaliação: ${now}`);
+      lines.push(`Responsável: ${reviewerName} (${reviewerRole})`);
+      lines.push(`Contato: ${reviewerPhone}`);
+      lines.push(`Site Analisado: https://shoppingdascasas.vercel.app`);
+      lines.push('');
+
+      for (let i = 1; i <= 8; i++) {
+        const statusEl = document.querySelector(`input[name="status_mod${i}"]:checked`);
+        const status = statusEl ? statusEl.value : '⏳ Pendente de avaliação';
+        const notes = document.getElementById(`notes_mod${i}`).value.trim();
+
+        lines.push(`--------------------------------------------------`);
+        lines.push(`🔹 ${MODULE_TITLES[i]}`);
+        lines.push(`Status: *${status}*`);
+
+        if (i === 2) {
+          lines.push(`• Preço Inicial ("A partir de"): ${document.getElementById('m2_min_price').value}`);
+          lines.push(`• Total de Casas Entregues: ${document.getElementById('m2_houses_built').value}`);
+        }
+        if (i === 3) {
+          lines.push(`• Valor m² Concreto: ${document.getElementById('m3_price_concreto').value}`);
+          lines.push(`• Valor m² Madeira: ${document.getElementById('m3_price_madeira').value}`);
+          lines.push(`• Valor m² Mista: ${document.getElementById('m3_price_mista').value}`);
+          lines.push(`• Modo de Exibição no Simulador: ${document.getElementById('m3_show_price').value}`);
+        }
+        if (i === 8) {
+          lines.push(`• WhatsApp Oficial Confirmado: ${document.getElementById('m8_whatsapp_oficial').value}`);
+          lines.push(`• Domínio Oficial: ${document.getElementById('m8_dominio').value}`);
+        }
+
+        // Checked items inside this module
+        const modCard = document.getElementById(`mod-${i}`);
+        const checks = modCard.querySelectorAll('.check-item');
+        checks.forEach(item => {
+          const cb = item.querySelector('input[type="checkbox"]');
+          const label = item.querySelector('span').innerText.trim();
+          lines.push(`  [${cb.checked ? 'SIM/OK' : 'NÃO MARCADO'}] ${label}`);
+        });
+
+        if (notes) {
+          lines.push(`📝 Observações/Ajustes: ${notes}`);
+        }
+        lines.push('');
+      }
+
+      lines.push('==================================================');
+      return lines.join('\n');
+    }
+
+    function exportToWhatsApp() {
+      const report = buildFullReportText();
+      const targetPhoneRaw = document.getElementById('agencyWhatsappNumber').value.replace(/\D/g, '');
+      const baseUrl = targetPhoneRaw
+        ? `https://wa.me/${targetPhoneRaw}?text=`
+        : `https://api.whatsapp.com/send?text=`;
+      window.open(baseUrl + encodeURIComponent(report), '_blank');
+    }
+
+    function copyReportClipboard() {
+      const report = buildFullReportText();
+      navigator.clipboard.writeText(report).then(() => {
+        showToast('📋 Relatório completo copiado para a área de transferência!');
+      });
+    }
+
+    function downloadReportTxt() {
+      const report = buildFullReportText();
+      const blob = new Blob([report], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'parecer-homologacao-shoppingdascasas.txt';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToast('📥 Arquivo parecer-homologacao-shoppingdascasas.txt baixado!');
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toastMsg');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      clearTimeout(window._toastTimer);
+      window._toastTimer = setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2800);
+    }
+  </script>
+</body>
+</html>
